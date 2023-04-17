@@ -1,0 +1,223 @@
+from tkinter import *
+from tkinter import ttk
+from tkinter import Text
+import random
+import time
+import datetime
+from tkinter import messagebox
+import mysql.connector
+
+
+
+class Hospital:
+    def __init__(self,root):
+        self.root=root
+        self.root.title("Hospital Management System")
+        self.root.geometry('1500x1000')
+
+
+
+        lbltitle=Label(self.root,bd=20,relief=RIDGE,text="HOSPITAL MANAGEMENT SYSTEM",fg="red",bg="white",font=("times new roman",50,"bold"))
+        lbltitle.pack(side=TOP,fill=X)
+
+        #===============================================================================#
+        Dataframe=Frame(self.root,bd=20,relief=RIDGE)
+        Dataframe.place(x=0,y=130,width=1280,height=400)
+
+
+        DataframeLeft=LabelFrame(Dataframe,bd=10,relief=RIDGE,padx=10,
+                                 font=("arial",12,"bold"),text="patient Information")
+        DataframeLeft.place(x=0,width=780,height=350)
+
+        DataframeRight=LabelFrame(Dataframe,bd=10,relief=RIDGE,padx=10,
+                                 font=("arial",12,"bold"),text="prescription")
+        DataframeRight.place(x=780,y=1,width=460,height=350)
+
+        #==============================butoon frame======================#
+        Buttonframe=Frame(self.root,bd=20,relief=RIDGE)
+        Buttonframe.place(x=0,y=530,width=1280,height=70)
+
+         #==============================details frame======================#
+        Detailsframe=Frame(self.root,bd=20,relief=RIDGE)
+        Detailsframe.place(x=0,y=600,width=1280,height=190) 
+
+        #####################Dataframe left############################################
+        lblNameTablet=Label(DataframeLeft,text="Name Of  Tablet",font=("times new roman",12,"bold"),padx=2,pady=6)
+        lblNameTablet.grid(row=0,column=0)
+
+        comNametablet=ttk.Combobox(DataframeLeft,font=("times new roman",12,"bold"),width=30)
+        comNametablet["values"]=("Nice","corona vacacine","Adderall","Ativan","amlodipine")
+        comNametablet.current(0)
+        comNametablet.grid(row=0,column=1)
+
+        lblref=Label(DataframeLeft,font=("arial",12,"bold"),text="Refence No:",padx=2)
+        lblref.grid(row=1,column=0,sticky=W)
+        txtref=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtref.grid(row=2,column=1)
+
+        lblDose=Label(DataframeLeft,font=("arial",12,"bold"),text="Dose:",padx=2,pady=4)
+        lblDose.grid(row=2,column=0,sticky=W)
+        txtDose=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtDose.grid(row=2,column=1)
+
+        lblNoOFtablets=Label(DataframeLeft,font=("arial",12,"bold"),text="No Of Tablets",padx=2,pady=6)
+        lblNoOFtablets.grid(row=3,column=0,sticky=W)
+        txtNoOFtablets=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtNoOFtablets.grid(row=3,column=1)
+
+        lblLot=Label(DataframeLeft,font=("arial",12,"bold"),text="Lot:",padx=2,pady=6)
+        lblLot.grid(row=4,column=0,sticky=W)
+        txtLot=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtLot.grid(row=4,column=1)
+
+
+        lblissueDate=Label(DataframeLeft,font=("arial",12,"bold"),text="Issue Date:",padx=2,pady=6)
+        lblissueDate.grid(row=5,column=0,sticky=W)
+        txtissueDate=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtissueDate.grid(row=5,column=1)
+
+        lblExDate=Label(DataframeLeft,font=("arial",12,"bold"),text="Exp Date:",padx=2,pady=6)
+        lblExDate.grid(row=6,column=0,sticky=W)
+        txtExDate=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtExDate.grid(row=6,column=1)
+
+        lblDailyDose=Label(DataframeLeft,font=("arial",12,"bold"),text="Daily Dose:",padx=2,pady=4)
+        lblDailyDose.grid(row=7,column=0,sticky=W)
+        txtDailyDose=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtDailyDose.grid(row=7,column=1)
+
+        lblsideEffect=Label(DataframeLeft,font=("arial",12,"bold"),text="Side Effect:",padx=2,pady=6)
+        lblsideEffect.grid(row=8,column=0,sticky=W)
+        txtsideEffect=Entry(DataframeLeft,font=("arial",13,"bold"),width=31)
+        txtsideEffect.grid(row=8,column=1)
+
+        lblotherinfo=Label(DataframeLeft,font=("arial",12,"bold"),text="Other info:",padx=2)
+        lblotherinfo.grid(row=0,column=2,sticky=W)
+        txtotherinfo=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtotherinfo.grid(row=0,column=3)
+
+        lblBP=Label(DataframeLeft,font=("arial",12,"bold"),text="Label:",padx=2,pady=6)
+        lblBP.grid(row=1,column=2,sticky=W)
+        txtBP=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtBP.grid(row=1,column=3)
+
+        lblMedicine=Label(DataframeLeft,font=("arial",12,"bold"),text="Medicine:",padx=2,pady=6)
+        lblMedicine.grid(row=2,column=2,sticky=W)
+        txtMedicine=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtMedicine.grid(row=2,column=3)
+
+        lblPatientID=Label(DataframeLeft,font=("arial",12,"bold"),text="Patient ID:",padx=2,pady=6)
+        lblPatientID.grid(row=3,column=2,sticky=W)
+        txtPatientID=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtPatientID.grid(row=3,column=3)
+
+        lblNhsnumber=Label(DataframeLeft,font=("arial",12,"bold"),text="NHS Number:",padx=2,pady=6)
+        lblNhsnumber.grid(row=4,column=2,sticky=W)
+        txtNhsnumber=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtNhsnumber.grid(row=4,column=3)
+
+        lblPatientname=Label(DataframeLeft,font=("arial",12,"bold"),text="patient Name:",padx=2,pady=6)
+        lblPatientname.grid(row=5,column=2,sticky=W)
+        txtPatientname=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtPatientname.grid(row=5,column=3)
+
+        lblPatientAddress=Label(DataframeLeft,font=("arial",12,"bold"),text="Patient Address:",padx=2,pady=6)
+        lblPatientAddress.grid(row=6,column=2,sticky=W)
+        txtPatientAddress=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtPatientAddress.grid(row=6,column=3)
+
+
+        lblDateOfBirth=Label(DataframeLeft,font=("arial",12,"bold"),text="Date of Birth:",padx=2,pady=6)
+        lblDateOfBirth.grid(row=7,column=2,sticky=W)
+        txtDateofBirth=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtDateofBirth.grid(row=7,column=3)
+
+        lblStorage=Label(DataframeLeft,font=("arial",12,"bold"),text="Storage:",padx=2,pady=6)
+        lblStorage.grid(row=8,column=2,sticky=W)
+        txtStorage=Entry(DataframeLeft,font=("arial",13,"bold"),width=33)
+        txtStorage.grid(row=8,column=3)
+
+        #==================================data frame right======================
+        self.txtPrescription=Text(DataframeRight,font=("arial",12,"bold"),width=47,height=16,padx=2,pady=6)
+        self.txtPrescription.grid(row=0,column=0)
+
+        #==========Button=========================================
+
+        btnPrescription=Button(Buttonframe,text="Presciption",bg="blue",fg="white",font=("arial",12,"bold"),width=23,padx=1,pady=4)
+        btnPrescription.grid(row=0,column=0) 
+
+        btnPrescriptionData=Button(Buttonframe,text="Presciption Data",bg="blue",fg="white",font=("arial",12,"bold"),width=23,padx=1,pady=4)
+        btnPrescriptionData.grid(row=0,column=1)
+
+        btnupdate=Button(Buttonframe,text="Update",bg="blue",fg="white",font=("arial",12,"bold"),width=23,padx=1,pady=4)
+        btnupdate.grid(row=0,column=2)
+
+        btnDelete=Button(Buttonframe,text="Delete",bg="blue",fg="white",font=("arial",12,"bold"),width=23,padx=1,pady=4)
+        btnDelete.grid(row=0,column=3)
+
+
+        btnClear=Button(Buttonframe,text="Clear",bg="blue",fg="white",font=("arial",12,"bold"),width=23,padx=1,pady=4)
+        btnClear.grid(row=0,column=4)
+
+        btnExit=Button(Buttonframe,text="Exit",bg="blue",fg="white",font=("arial",12,"bold"),width=23,padx=1,pady=4)
+        btnExit.grid(row=0,column=5)
+
+        #=======================================Table===============scrollbar=========#
+        scroll_x=ttk.Scrollbar(Detailsframe,orient=HORIZONTAL)
+        scroll_y=ttk.Scrollbar(Detailsframe,orient=VERTICAL)
+        self.hospital_table=ttk.Treeview(Detailsframe,column=("nameoftablets","ref","dose","lot","issuedate","expdate","dailydose","Storage","nhsnumber","pname","dob","address"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        scroll_x.pack(side=BOTTOM,fill=X)
+        scroll_y.pack(side=RIGHT,fill=Y)
+        scroll_x=ttk.Scrollbar(command=self.hospital_table.xview)
+        scroll_y=ttk.Scrollbar(command=self.hospital_table.yview)
+        self.hospital_table.heading("nameoftablets",text="Name of Table")
+        self.hospital_table.heading("ref",text="Reference NO.")
+        self.hospital_table.heading("dose",text="Dose")
+        self.hospital_table.heading("lot",text="Lot")
+        self.hospital_table.heading("issuedate",text="Issue Date")
+        self.hospital_table.heading("expdate",text="Exp Date")
+        self.hospital_table.heading("dailydose",text="Daily Dose")
+        self.hospital_table.heading("Storage",text="Storage")
+        self.hospital_table.heading("nhsnumber",text="NHS Number")
+        self.hospital_table.heading("pname",text="patient Name")
+        self.hospital_table.heading("dob",text="DoB")
+        self.hospital_table.heading("address",text="Address")
+
+
+        self.hospital_table["show"]="headings"
+        self.hospital_table.pack(fill=BOTH,expand=1)
+
+        self.hospital_table.column("nameoftablets",width=50)
+        self.hospital_table.column("ref",width=50)
+        self.hospital_table.column("dose",width=50)
+        self.hospital_table.column("lot",width=50)
+        self.hospital_table.column("issuedate",width=50)
+        self.hospital_table.column("expdate",width=50)
+        self.hospital_table.column("dailydose",width=50)
+        self.hospital_table.column("Storage",width=50)
+        self.hospital_table.column("nhsnumber",width=50)
+        self.hospital_table.column("pname",width=50)
+        self.hospital_table.column("dob",width=50)
+        self.hospital_table.column("address",width=50)
+
+
+        self.hospital_table.pack(fill=BOTH,expand=1)
+
+
+        #=============================================functinality DECLRATION======================================
+        def iPrescriptionData(self):
+            if self.Nameoftablets.get()=="" or self.ref.get()=="":
+                messagebox.showerror("Error","ALL FIELDS ARE REQUIRED")
+            else:
+                conn=mysql.connector.connect(host="localhost",username="root",password="Test@123",database="Mydata")
+                my_cursor=conn.cursor()
+                
+
+
+
+root = Tk()
+ob= Hospital(root)
+root.mainloop()
+
+
+
